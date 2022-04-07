@@ -9,14 +9,14 @@ import SignWithGoogle from '../components/GoogleAuth'
 export default function Login() {
 
     const [loginEmail, setLoginEmail] = useState('');
-    const [loginPassword, setLoginPassword] = useState('');
+    const [Password, setPassword] = useState('');
     const [user, setUser] = useState(null);
 
 
     const loginUser = async () => {
+       
         try {
-            const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-            console.log(user);
+            await signInWithEmailAndPassword(auth, loginEmail, Password);
             setUser(auth.currentUser.email);
         } catch (error) {
             console.log(error.message);
@@ -48,7 +48,7 @@ export default function Login() {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="your_pass"><i className="zmdi zmdi-lock"></i></label>
-                                    <input type="password" name="your_pass" id="your_pass" placeholder="Password" onChange={(e) => setLoginPassword(e.target.value)} />
+                                    <input type="password" name="your_pass" id="your_pass" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                                 </div>
                                 <div className="form-group">
                                     <input type="checkbox" name="remember-me" id="remember-me" className="agree-term" />

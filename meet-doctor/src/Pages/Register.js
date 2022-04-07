@@ -3,18 +3,31 @@ import {
     createUserWithEmailAndPassword,
 } from 'firebase/auth';
 import {auth} from '../config/firebase-config';
+import {Alert} from 'react-bootstrap';
+
 
 export default function Register(){
     const [registerEmail, setRegisterEmail] = useState('');
     const [registerPassword, setRegisterPassword] = useState('');
+    const [PasswordConfirmation,setPasswordConfirmation] = useState('');
+    const [error , setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
 
     const registerUser = async() => {
+        if (registerPassword !== PasswordConfirmation) {
+            return setError('Password do not match.');
+        }
         try {
+            setError('');
+            setLoading(true);
             const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
             console.log(user);
         } catch (error) {
             console.log(error.message);
+            setError('Failed To Create An Account.');
         }
+        setLoading(false);
     };
     return(
         <div className="main">
@@ -24,6 +37,7 @@ export default function Register(){
                 <div className="signup-content">
                     <div className="signup-form">
                         <h2 className="form-title">Sign up</h2>
+                        {error && <Alert variant="danger">{error}</Alert>}
                         <div className="register-form" id="register-form">
                             {/* <div className="form-group">
                                 <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
@@ -37,16 +51,12 @@ export default function Register(){
                                 <label htmlFor="pass"><i className="zmdi zmdi-lock"></i></label>
                                 <input type="password" name="pass" id="pass" placeholder="Password" onChange={(e) => setRegisterPassword(e.target.value)}/>
                             </div>
-                            {/* <div className="form-group">
-                                <label htmlFor="re-pass"><i className="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"/>
-                            </div> */}
-                            {/* <div className="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" className="agree-term" />
-                                <label htmlFor="agree-term" className="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" className="term-service">Terms of service</a></label>
-                            </div> */}
+                            <div className="form-group">
+                                    <label htmlFor="your_pass"><i className="zmdi zmdi-lock"></i></label>
+                                    <input type="password" name="your_pass" id="your_pass" placeholder="Password Confirmation" onChange={(e) => setPasswordConfirmation(e.target.value)} />
+                                </div>
                             <div className="form-group form-button">
-                                <input type="submit" name="signup" id="signup" className="form-submit" value="Register"  onClick={registerUser}/>
+                                <input disabled={loading} type="submit" name="signup" id="signup" className="form-submit" value="Register"  onClick={registerUser}/>
                             </div>
                         </div>
                     </div>
