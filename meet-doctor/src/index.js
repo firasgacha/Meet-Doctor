@@ -7,6 +7,8 @@ import Home from './Pages/Home';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Test from './Pages/Test';
+import ForgetPassword from './Pages/ForgetPassword';
+import Profile from './Pages/Profile';
 import {
   BrowserRouter,
   Routes,
@@ -17,10 +19,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route exact path="/" element={<Home />} />
       <Route path="/Test" element={<Test />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/Profile" element={<Profile />} />
+      <Route path="/forget-password" element={<ForgetPassword />} />
       <Route path="*" element={<div>Not Found</div>} />
     </Routes>
   </BrowserRouter>
