@@ -7,6 +7,8 @@ import SignWithGoogle from '../components/GoogleAuth';
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from 'react-bootstrap';
 import Topbar from '../components/TopBar';
+import Navbar from '../components/Navbar';
+
 
 
 
@@ -46,6 +48,7 @@ export default function Login() {
     return (
         <>
             <Topbar />
+            <Navbar />
 
             <div className="main">
                 {user}

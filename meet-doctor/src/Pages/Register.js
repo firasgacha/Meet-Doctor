@@ -6,6 +6,8 @@ import { auth } from '../config/firebase-config';
 import { Alert } from 'react-bootstrap';
 import { Link,useNavigate } from 'react-router-dom';
 import Topbar from '../components/TopBar';
+import Navbar from '../components/Navbar';
+
 
 
 export default function Register() {
@@ -41,6 +43,7 @@ export default function Register() {
     return (
         <>
         <Topbar/>
+        <Navbar />
         <div className="main">
             {/* <!-- Sign up form --> */}
             <section className="signup">
