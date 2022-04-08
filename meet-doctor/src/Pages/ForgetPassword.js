@@ -26,7 +26,11 @@ export default function ForgetPassword() {
             setMessage('Check your inbox for further instructions.');
          } catch (error) {
              console.log(error.message);
-             setError('Failed to reset password.');
+             if(error.message==='Firebase: Error (auth/user-not-found).'){
+                 setError('User not found.');
+             }else {
+                setError('Failed to reset password.');
+             }
          }
          setLoading(false);
 
@@ -48,6 +52,7 @@ export default function ForgetPassword() {
                         <div className="signin-form">
                             <h2 className="form-title">Password Reset</h2>
                             {message && <Alert variant="success">{message}</Alert>}
+                            {error && <Alert variant="danger">{error}</Alert>}
                             <div className="register-form" id="login-form">
                                 <div className="form-group">
                                     <label htmlFor="your_name"><i className="zmdi zmdi-email"></i></label>
