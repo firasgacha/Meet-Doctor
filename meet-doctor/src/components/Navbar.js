@@ -34,7 +34,7 @@ export default function Navbar() {
         <div>
             <nav className="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
                 <Link to="/" className="navbar-brand p-0">
-                    <h1 className="m-0 text-primary"><i class="fas fa-user-md-chat"></i>Meet Doctor</h1>
+                    <h1 className="m-0 text-primary"><i className="fas fa-user-md-chat"></i>Meet Doctor</h1>
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span className="navbar-toggler-icon"></span>
