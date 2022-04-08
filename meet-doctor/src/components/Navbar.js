@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import { auth } from '../config/firebase-config';
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import {
     signOut
 } from 'firebase/auth';
@@ -8,7 +8,6 @@ import {
 
 
 export default function Navbar() {
-    const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
 
@@ -34,7 +33,7 @@ export default function Navbar() {
         <div>
             <nav className="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
                 <Link to="/" className="navbar-brand p-0">
-                    <h1 className="m-0 text-primary"><i className="fas fa-user-md-chat"></i>Meet Doctor</h1>
+                    <h1 className="m-0 text-primary">Meet Doctor</h1>
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span className="navbar-toggler-icon"></span>
@@ -42,8 +41,10 @@ export default function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarCollapse">
                     <div className="navbar-nav ms-auto py-0">
                         <Link to="/" className="nav-item nav-link active">Home</Link>
+                        <Link to="/Departements" className="nav-item nav-link active">Departements</Link>
+                        <Link to="/Doctors" className="nav-item nav-link active">Doctors</Link>
                         <a href="about.html" className="nav-item nav-link">About</a>
-                        <a href="service.html" className="nav-item nav-link">Service</a>
+                        {user? <Link to="/Appointment" className="nav-item nav-link">Appointment</Link> : null}
                         <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div className="dropdown-menu m-0">

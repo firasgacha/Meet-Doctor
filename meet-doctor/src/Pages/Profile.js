@@ -7,7 +7,6 @@ import { auth } from '../config/firebase-config';
 import { Alert } from 'react-bootstrap';
 import { Link,useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { async } from '@firebase/util';
 
 
 
@@ -23,28 +22,7 @@ export default function Profile() {
 
 
 
-    const updateProfile = async(e) => {
-        // e.preventDefault();
-        // if (registerPassword !== PasswordConfirmation) {
-        //     return setError('Password do not match.');
-        // }
-        // const promises =[];
-        // setError('');
-        // setLoading(true);
-        // if(registerEmail !== auth.currentUser.email){
-        //     promises.push( updateEmail(auth, registerEmail))
-        // }
-        // if(registerPassword){
-        //     promises.push( updatePassword(auth, registerPassword)) 
-        // }
-
-        // promises.all(promises).then(() => {
-        //     navigate('/')
-        // }).catch(() => {
-        //     setError('Failed to update profile')
-        // }).finally(()=>{
-        //      setLoading(false); 
-        // })
+    const updateProfile = async() => {
         try {
             setError('');
         setLoading(true);
@@ -68,7 +46,6 @@ export default function Profile() {
         if(auth.currentUser){
           setUser(auth.currentUser);
           setRegisterEmail(auth.currentUser.email);
-          console.log(user);
         }else {
             navigate('/login');
         }
