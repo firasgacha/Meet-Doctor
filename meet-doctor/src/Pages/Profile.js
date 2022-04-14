@@ -111,14 +111,15 @@ export default function Profile() {
                             </div>
                             <div>
 
-                                {imageList.map((url) => {
+                                {/* {imageList.map((url) => {
+                                    console.log(url);
                                     return (
                                         
-                                            <img src={url} />
+                                    <img src={url} />
                                         
 
                                     )
-                                })}
+                                })} */}
                             </div>
                         </div>
                     </div>
