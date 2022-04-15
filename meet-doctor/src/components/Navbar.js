@@ -1,9 +1,11 @@
-import React,{useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { auth } from '../config/firebase-config';
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
 import {
     signOut
 } from 'firebase/auth';
+import Avatar from '@mui/material/Avatar';
 
 
 
@@ -16,18 +18,19 @@ export default function Navbar() {
         console.log(auth.currentUser)
         try {
             await signOut(auth);
-            window.location.reload();           
+            localStorage.clear();
+            window.location.reload();
         } catch (error) {
             console.log(error.message);
         }
     };
 
     useEffect(() => {
-        if(auth.currentUser){
-          setUser(auth.currentUser);
-          console.log(user);
+        if (auth.currentUser) {
+            setUser(auth.currentUser);
+            console.log(user);
         }
-      },[]);
+    }, []);
 
     return (
         <div>
@@ -44,21 +47,24 @@ export default function Navbar() {
                         <Link to="/Departements" className="nav-item nav-link active">Departements</Link>
                         <Link to="/Doctors" className="nav-item nav-link active">Doctors</Link>
                         <a href="about.html" className="nav-item nav-link">About</a>
-                        {user? <Link to="/Appointment" className="nav-item nav-link">Appointment</Link> : null}
-                        <div className="nav-item dropdown">
-                            <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div className="dropdown-menu m-0">
-                                <a href="price.html" className="dropdown-item">Pricing Plan</a>
-                                <a href="team.html" className="dropdown-item">Our Dentist</a>
-                                <a href="testimonial.html" className="dropdown-item">Testimonial</a>
-                                <a href="appointment.html" className="dropdown-item">Appointment</a>
+                        {user ?
+                            <div className="nav-item dropdown">
+                                <Dropdown>
+                                    <Dropdown.Toggle variant='white' id="dropdown-basic" className="nav-link dropdown-toggle">
+                                        Appointment
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu className="dropdown-menu m-0">
+                                        <Link to="/Appointment" className="dropdown-item">Make Appointment</Link>
+                                        <Link to="/MyAppointment" className="dropdown-item">My Appointments</Link>
+                                    </Dropdown.Menu>
+                                </Dropdown>
                             </div>
-                        </div>
+                            : null}
                         <a href="contact.html" className="nav-item nav-link">Contact</a>
                     </div>
                     {/* <button type="button" className="btn text-dark" data-bs-toggle="modal" data-bs-target="#searchModal"><i className="fa fa-search"></i></button> */}
                     {
-                        user == null?
+                        user == null ?
                             <div>
                                 <Link to="/login" className="btn btn-primary py-2 px-4 ms-3">Log in</Link>
                                 <Link to="/register" className="btn btn-primary py-2 px-4 ms-3">Sign up</Link>
@@ -66,8 +72,13 @@ export default function Navbar() {
                             :
                             <div className="d-flex align-content-center">
                                 <Link to="/profile">
-                                <i className="bi bi-person-circle text-primary ms" style={{fontSize: '2rem'}}></i>
-                                </Link> 
+                                    {localStorage.getItem('photo') ? <Avatar
+                                        alt="Remy Sharp"
+                                        src={localStorage.getItem('photo')}
+                                        sx={{ width: 36, height: 36 }}
+                                    /> : <i className="bi bi-person-circle text-primary ms" style={{ fontSize: '2rem' }}></i>
+                                    }
+                                </Link>
                                 <button onClick={logoutUser} className="btn btn-primary py-2 px-4 ms-3">Log out</button>
                             </div>
                     }

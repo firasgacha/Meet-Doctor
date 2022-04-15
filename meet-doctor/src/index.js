@@ -11,6 +11,7 @@ import ForgetPassword from './Pages/ForgetPassword';
 import Profile from './Pages/Profile';
 import Doctors from './Pages/Doctors';
 import Appointment from './Pages/Appointment';
+import MyAppointment from './Pages/MyAppointment';
 import Departements from './Pages/Departements';
 import { auth } from './config/firebase-config';
 
@@ -30,6 +31,7 @@ root.render(
       <Route path="/Doctors" element={<Doctors />} />
       <Route path="/Departements" element={<Departements />} />
       <Route path="/Appointment" element={<Appointment />} />
+      <Route path="/MyAppointment" element={<MyAppointment />} />
       {/* <Route path="/Appointment" element={auth.currentUser? <Appointment /> : <Login/>} /> */}
       <Route path="/register" element={<Register />} />
       <Route path="/Profile" element={<Profile />} />

@@ -17,7 +17,10 @@ export default function Departements() {
     const getDepartements = async () => {
       const data = await getDocs(departementsCollectionRef);
       setDepartements(
-        data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        data.docs
+        .map((doc) => ({ ...doc.data(), id: doc.id }))
+        .filter(dep => dep.name.toString().includes('Radiology'))
+
       )
     }
 
@@ -53,8 +56,9 @@ export default function Departements() {
                   <h1 className="display-5 mb-0">We Offer The Best Quality Services</h1>
                 </div>
                 <div className="row g-5">
-                  {departements.map((dep) => {
-                    console.log(dep);
+                  {departements
+                  // .filter(dep => dep.name.toString().includes('Radiology'))
+                  .map((dep) => {
                     return (
                       <DepartementsCards key={dep.id} titre={dep.name} text={dep.descriptor} />
                     )

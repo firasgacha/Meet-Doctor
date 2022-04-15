@@ -15,6 +15,7 @@ export default function Appointment() {
     const [doctor, setDoctor] = useState('');
     const [email, setEmail] = useState('');
     const [fullName, setName] = useState('');
+    const [userId, setUserId] = useState('');
     const navigate = useNavigate();
     //database states
     const [departementsList, setDepartementsList] = useState([]);
@@ -24,7 +25,7 @@ export default function Appointment() {
     const departementsCollectionRef = collection(db, 'Departement');
 
     const createAppointment = async () => {
-        await addDoc(appointmentCollectionRef, { date: dateApp, departement: departement, doctor: doctor, email: email, name: fullName, time: time })
+        await addDoc(appointmentCollectionRef, {userId: userId, date: dateApp, departement: departement, doctor: doctor, email: email, name: fullName, time: time })
             .then(() => {
                 console.log('appointment created');
                 document.getElementById('appointment-form').reset();
@@ -43,7 +44,10 @@ export default function Appointment() {
         setDoctorsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     }
     useEffect(() => {
-        if (auth.currentUser) { setEmail(auth.currentUser.email); setName(auth.currentUser.displayName); } else { navigate('/login'); }
+        if (auth.currentUser) {
+            setUserId(auth.currentUser.uid);
+            setEmail(auth.currentUser.email); 
+            setName(auth.currentUser.displayName); } else { navigate('/login'); }
         getDepartements();
         getDoctors();
     }, []);
@@ -57,7 +61,7 @@ export default function Appointment() {
                     <div className="col-12 text-center">
                         <h1 className="display-3 text-white animated zoomIn">Appointment</h1>
                         <Link to="/" className="h4 text-white">Home</Link>
-                        <i className="far fa-circle text-white px-2"></i>
+                        <i className="h5 bi bi-arrow-right text-white ms-1 me-1"></i>
                         <Link to="/appointment" className="h4 text-white">Appointment</Link>
                     </div>
                 </div>
