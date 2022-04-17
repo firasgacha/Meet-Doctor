@@ -21,6 +21,7 @@ export default function Profile() {
     const [registerPassword, setRegisterPassword] = useState('');
     const [PasswordConfirmation, setPasswordConfirmation] = useState('');
     const [error, setError] = useState('');
+    const [error2, setError2] = useState('');
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState(null);
     const [imageList, setImageList] = useState([]);
@@ -28,6 +29,7 @@ export default function Profile() {
     const navigate = useNavigate()
     const [imageUpload, setImageUpload] = useState(null);
     const [role, setRole] = useState('');
+    const [updateOffOn, setUpdateOffOn] = useState(true);
     //database states
     const [phone, setPhone] = useState('');
     const [birthday, setBirthday] = useState('');
@@ -50,6 +52,7 @@ export default function Profile() {
                 setphotoURL(user.photoURL)
                 setRole(user.role)
             })
+            console.log(fullName)
         } catch (error) {
             console.log(error.message)
         }
@@ -66,6 +69,8 @@ export default function Profile() {
         // });
     }
     const UpdateUserInfo = async () => {
+        setError('');
+        if (fullName === '' || birthday === '' || phone === '') { return setError('Please fill all fields') }
         await addDoc(usersCollectionRef, {
             phone: phone,
             birthday: birthday,
@@ -76,7 +81,8 @@ export default function Profile() {
 
         })
             .then(() => {
-                console.log('User updated');
+                // console.log('User updated');
+                alert('Informations updated successfully')
             }).catch((error) => {
                 console.log(error.message);
             })
@@ -95,7 +101,7 @@ export default function Profile() {
             setError('');
             setLoading(true);
             if (registerPassword !== PasswordConfirmation) {
-                return setError('Password do not match.');
+                return setError2('Password do not match.');
             }
             if (registerEmail !== auth.currentUser.email) {
                 updateEmail(auth.currentUser, registerEmail)
@@ -118,8 +124,6 @@ export default function Profile() {
         if (auth.currentUser) {
             // setUser(auth.currentUser);
             setRegisterEmail(auth.currentUser.email);
-        } else {
-            navigate('/login');
         }
     }, []);
 
@@ -132,6 +136,12 @@ export default function Profile() {
         //     });
         // });
         getUserByEmail();
+    }, []);
+
+    useEffect(() => {
+        if(localStorage.getItem('email') !== null){
+            setUpdateOffOn(false);
+        }
     }, []);
 
     return (
@@ -150,12 +160,12 @@ export default function Profile() {
             </div>
             {/* <!-- Hero End --> */}
             {/* <!-- Sign up form --> */}
-            <div className="d-flex justify-content-center">
-                {error && <Alert variant="danger">{error}</Alert>}
-            </div>
             <div className="container signin-content">
                 <div className="signup-form">
-                <h3 className="d-flex justify-content-center">{role==="0"?"User":role==="1"?"Doctor":null} Informations</h3>
+                    <h3 className="d-flex justify-content-center">{role === "0" ? "User" : role === "1" ? "Doctor" : null} Informations</h3>
+                    <div className="d-flex justify-content-center">
+                        {error && <Alert variant="danger">{error}</Alert>}
+                    </div>
                     <Avatar
                         alt="Remy Sharp"
                         src={localStorage.getItem('photo')}
@@ -196,26 +206,32 @@ export default function Profile() {
 
 
                 </div>
-                <div className="signup-form">
-                    <h3 className="d-flex justify-content-center">Security</h3>
-                    <div className="register-form mt-5" id="register-form">
-                        <div className="form-group">
-                            <label htmlFor="email"><i className="zmdi zmdi-email"></i></label>
-                            <input type="email" name="email" id="email" placeholder="Your Email" onChange={(e) => setRegisterEmail(e.target.value)} defaultValue={registerEmail} />
+                {updateOffOn ?
+                    <div className="signup-form">
+                        <h3 className="d-flex justify-content-center">Security</h3>
+                        <div className="d-flex justify-content-center">
+                            {error2 && <Alert variant="danger">{error2}</Alert>}
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="pass"><i className="zmdi zmdi-lock"></i></label>
-                            <input type="password" name="pass" id="pass" placeholder="Leave blank to keep the same password" onChange={(e) => setRegisterPassword(e.target.value)} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="your_pass"><i className="zmdi zmdi-lock"></i></label>
-                            <input type="password" name="your_pass" id="your_pass" placeholder="Leave blank to keep the same password" onChange={(e) => setPasswordConfirmation(e.target.value)} />
-                        </div>
-                        <div className="form-group form-button">
-                            <input disabled={loading} type="submit" name="signup" id="signup" className="form-submit" value="Update" onClick={updateSecurity} />
+                        <div className="register-form mt-5" id="register-form">
+                            <div className="form-group">
+                                <label htmlFor="email"><i className="zmdi zmdi-email"></i></label>
+                                <input type="email" name="email" id="email" placeholder="Your Email" onChange={(e) => setRegisterEmail(e.target.value)} defaultValue={registerEmail} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="pass"><i className="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="pass" id="pass" placeholder="Leave blank to keep the same password" onChange={(e) => setRegisterPassword(e.target.value)} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="your_pass"><i className="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="your_pass" id="your_pass" placeholder="Leave blank to keep the same password" onChange={(e) => setPasswordConfirmation(e.target.value)} />
+                            </div>
+                            <div className="form-group form-button">
+                                <input disabled={loading} type="submit" name="signup" id="signup" className="form-submit" value="Update" onClick={updateSecurity} />
+                            </div>
                         </div>
                     </div>
-                </div>
+                    : null}
+
 
                 <div>
 

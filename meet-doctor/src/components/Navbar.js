@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { auth } from '../config/firebase-config';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import {
     signOut
@@ -11,12 +11,15 @@ import { collection, getDocs } from 'firebase/firestore';
 
 
 
+
 export default function Navbar() {
     const [user, setUser] = useState(null);
     const [fullName, setFullName] = useState('');
     const [photoURL, setphotoURL] = useState(null);
     const usersCollectionRef = collection(db, 'Users');
     const [role, setRole] = useState('');
+    const navigate = useNavigate()
+
 
 
 
@@ -43,7 +46,7 @@ export default function Navbar() {
         try {
             await signOut(auth);
             localStorage.clear();
-            window.location.reload();
+            navigate('/');
         } catch (error) {
             console.log(error.message);
         }

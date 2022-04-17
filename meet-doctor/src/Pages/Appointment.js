@@ -28,7 +28,8 @@ export default function Appointment() {
     const createAppointment = async () => {
         await addDoc(appointmentCollectionRef, {meetLink: meetLink, userId: userId, date: dateApp, departement: departement, doctor: doctor, email: email, name: fullName, time: time })
             .then(() => {
-                console.log('appointment created');
+                // console.log('appointment created');
+                alert('Appointment sended successfully');
                 document.getElementById('appointment-form').reset();
             }).catch((error) => {
                 console.log(error.message);

@@ -59,7 +59,10 @@ export default function CustomizedTables(props) {
           {props.appointments.map((row) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
-                {row.meetLink}
+                {row.meetLink.toString() === 'Not available' ? 
+                <p>{row.meetLink}</p> 
+                : <a href={row.meetLink}>{row.meetLink}</a>
+                }
               </StyledTableCell>
               <StyledTableCell align="right">{row.date}</StyledTableCell>
               <StyledTableCell align="right">{row.time}</StyledTableCell>
