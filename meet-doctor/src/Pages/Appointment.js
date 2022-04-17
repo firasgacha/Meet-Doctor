@@ -16,6 +16,7 @@ export default function Appointment() {
     const [email, setEmail] = useState('');
     const [fullName, setName] = useState('');
     const [userId, setUserId] = useState('');
+    const [meetLink, setMeetingLink] = useState('Not available');
     const navigate = useNavigate();
     //database states
     const [departementsList, setDepartementsList] = useState([]);
@@ -25,7 +26,7 @@ export default function Appointment() {
     const departementsCollectionRef = collection(db, 'Departement');
 
     const createAppointment = async () => {
-        await addDoc(appointmentCollectionRef, {userId: userId, date: dateApp, departement: departement, doctor: doctor, email: email, name: fullName, time: time })
+        await addDoc(appointmentCollectionRef, {meetLink: meetLink, userId: userId, date: dateApp, departement: departement, doctor: doctor, email: email, name: fullName, time: time })
             .then(() => {
                 console.log('appointment created');
                 document.getElementById('appointment-form').reset();

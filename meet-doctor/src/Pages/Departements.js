@@ -19,7 +19,7 @@ export default function Departements() {
       setDepartements(
         data.docs
         .map((doc) => ({ ...doc.data(), id: doc.id }))
-        .filter(dep => dep.name.toString().includes('Radiology'))
+        // .filter(dep => dep.name.toString().includes('Radiology'))
 
       )
     }

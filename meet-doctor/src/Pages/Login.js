@@ -21,7 +21,7 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
 
-    
+
 
 
     const loginUser = async e => {
@@ -49,53 +49,44 @@ export default function Login() {
         <>
             <Topbar />
             <Navbar />
+            {/* <!-- Sing in  Form --> */}
+            <div className="container mt-2">
+                <div className="signin-content">
+                    <div className="signin-image">
+                        <figure><img src="../../assets/auth/images/signin-image.jpg" alt="sing up image" /></figure>
+                        <div className="text-center">Need an account ? <Link to="/register">Sign Up</Link></div>
+                    </div>
 
-            <div className="main">
-                {user}
-                {/* <!-- Sing in  Form --> */}
-                <section className="sign-in">
-                    <div className="container">
-                        <div className="signin-content">
-                            <div className="signin-image">
-                                <figure><img src="../../assets/auth/images/signin-image.jpg" alt="sing up image" /></figure>
-                                <div className="text-center">Need an account ? <Link to="/register">Sign Up</Link></div>
+                    <div className="signin-form">
+                        <h2 className="form-title">Log in</h2>
+                        {error && <Alert variant="danger">{error}</Alert>}
+                        <div className="register-form" id="login-form">
+                            <div className="form-group">
+                                <label htmlFor="your_name"><i className="zmdi zmdi-email"></i></label>
+                                <input type="email" name="your_name" id="your_name" placeholder="Your E-mail" onChange={(e) => setLoginEmail(e.target.value)} />
                             </div>
-
-                            <div className="signin-form">
-                                <h2 className="form-title">Log in</h2>
-                                {error && <Alert variant="danger">{error}</Alert>}
-                                <div className="register-form" id="login-form">
-                                    <div className="form-group">
-                                        <label htmlFor="your_name"><i className="zmdi zmdi-email"></i></label>
-                                        <input type="email" name="your_name" id="your_name" placeholder="Your E-mail" onChange={(e) => setLoginEmail(e.target.value)} />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="your_pass"><i className="zmdi zmdi-lock"></i></label>
-                                        <input type="password" name="your_pass" id="your_pass" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                                    </div>
-                                    <div className="form-group">
-                                        <Link to="/forget-password">Forgot your password ?</Link>
-                                    </div>
-                                    <div className="form-group">
-                                        <input type="checkbox" name="remember-me" id="remember-me" className="agree-term" />
-                                        <label htmlFor="remember-me" className="label-agree-term"><span><span></span></span>Remember me</label>
-                                    </div>
-                                    <div className="form-group form-button">
-                                        <input disabled={loading} type="submit" name="signin" id="signin" className="form-submit" value="Log in" onClick={loginUser} />
-                                    </div>
-                                </div>
-                                <div className="social-login">
-                                    <span className="social-label">Or login with</span>
-                                    <ul className="socials">
-                                        <li><a href="#"><i className="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                                        <li><a href="#"><i className="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                                        <SignWithGoogle />
-                                    </ul>
-                                </div>
+                            <div className="form-group">
+                                <label htmlFor="your_pass"><i className="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="your_pass" id="your_pass" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                            </div>
+                            <div className="form-group">
+                                <Link to="/forget-password">Forgot your password ?</Link>
+                            </div>
+                            <div className="form-group form-button">
+                                <input disabled={loading} type="submit" name="signin" id="signin" className="form-submit" value="Log in" onClick={loginUser} />
+                            </div>
+                            <div className="social-login">
+                                <span className="social-label">Or login with</span>
+                                <ul className="socials">
+                                    <li><a href="#"><i className="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                                    <li><a href="#"><i className="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                                    <SignWithGoogle />
+                                </ul>
                             </div>
                         </div>
+
                     </div>
-                </section>
+                </div>
             </div>
         </>
     );

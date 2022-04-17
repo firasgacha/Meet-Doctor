@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     createUserWithEmailAndPassword,
 } from 'firebase/auth';
@@ -40,15 +40,16 @@ export default function Register() {
         }
         setLoading(false);
     };
+
+    useEffect(() => {
+        document.getElementById('form-login').reset();
+    },[]);
     return (
         <>
         <Topbar/>
         <Navbar />
-        <div className="main">
             {/* <!-- Sign up form --> */}
-            <section className="signup">
-                <div className="container">
-                    <div className="signup-content">
+                    <form id="form-login" className="signup-content">
                         <div className="signup-form">
                             <h2 className="form-title">Sign up</h2>
                             {error && <Alert variant="danger">{error}</Alert>}
@@ -78,10 +79,7 @@ export default function Register() {
                             <figure><img src="../../assets/auth/images/signup-image.jpg" alt="sing up image" /></figure>
                             <div className="signup-image-link">You are already a member ? <Link to="/login">Log In</Link></div>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+                    </form>
         </>
     )
 }

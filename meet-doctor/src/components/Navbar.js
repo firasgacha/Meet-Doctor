@@ -6,13 +6,37 @@ import {
     signOut
 } from 'firebase/auth';
 import Avatar from '@mui/material/Avatar';
+import { db } from '../config/firebase-config';
+import { collection, getDocs } from 'firebase/firestore';
 
 
 
 export default function Navbar() {
     const [user, setUser] = useState(null);
+    const [fullName, setFullName] = useState('');
+    const [photoURL, setphotoURL] = useState(null);
+    const usersCollectionRef = collection(db, 'Users');
+    const [role, setRole] = useState('');
 
 
+
+    const getUserByEmail = async () => {
+        try {
+            const data = await getDocs(usersCollectionRef)
+            setUser(
+                await data.docs
+                    .filter(doc => doc.data().email === auth.currentUser.email || doc.data().email === localStorage.getItem('email'))
+                    .map((doc) => ({ ...doc.data(), id: doc.id }))
+            )
+            user.map(user => {
+                setFullName(user.fullName)
+                setphotoURL(user.photoURL)
+                setRole(user.role)
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
     const logoutUser = async e => {
         e.preventDefault()
         console.log(auth.currentUser)
@@ -30,6 +54,7 @@ export default function Navbar() {
             setUser(auth.currentUser);
             console.log(user);
         }
+        getUserByEmail();
     }, []);
 
     return (
@@ -56,6 +81,7 @@ export default function Navbar() {
                                     <Dropdown.Menu className="dropdown-menu m-0">
                                         <Link to="/Appointment" className="dropdown-item">Make Appointment</Link>
                                         <Link to="/MyAppointment" className="dropdown-item">My Appointments</Link>
+                                        <Link to="/MyAppointmentDoctor" className="dropdown-item">Doctor Appointments</Link>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </div>
