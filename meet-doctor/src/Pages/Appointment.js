@@ -6,6 +6,7 @@ import { auth } from '../config/firebase-config';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase-config';
 import Footer from '../components/Footer';
+import {Spinner} from '../components/Spinner';
 
 
 export default function Appointment() {
@@ -26,6 +27,9 @@ export default function Appointment() {
     const appointmentCollectionRef = collection(db, "Appointment");
     const departementsCollectionRef = collection(db, 'Departement');
 
+    const [hide, setHide] = useState(true);
+    
+    
     const createAppointment = async () => {
         await addDoc(appointmentCollectionRef, {meetLink: meetLink, userId: userId, date: dateApp, departement: departement, doctor: doctor, email: email, name: fullName, time: time })
             .then(() => {
@@ -54,10 +58,16 @@ export default function Appointment() {
         getDepartements();
         getDoctors();
     }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            setHide(false);
+        }, 1000);
+    }, [])
     return (
         <>
             <Topbar />
             <Navbar />
+            {hide ? <Spinner/> : null}
             {/* <!-- Hero Start --> */}
             <div className="container-fluid bg-primary py-5 hero-header mb-5">
                 <div className="row py-3">

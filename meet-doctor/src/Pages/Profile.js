@@ -13,6 +13,9 @@ import { v4 } from 'uuid';
 import Avatar from '@mui/material/Avatar';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase-config';
+import { Spinner } from '../components/Spinner';
+import Topbar from '../components/TopBar';
+
 
 
 
@@ -36,6 +39,8 @@ export default function Profile() {
     const [fullName, setFullName] = useState('');
     const [photoURL, setphotoURL] = useState(null);
     const usersCollectionRef = collection(db, 'Users');
+    const [hide, setHide] = useState(true);
+
 
     const getUserByEmail = async () => {
         try {
@@ -52,7 +57,6 @@ export default function Profile() {
                 setphotoURL(user.photoURL)
                 setRole(user.role)
             })
-            console.log(fullName)
         } catch (error) {
             console.log(error.message)
         }
@@ -91,9 +95,11 @@ export default function Profile() {
     const uploadImage = () => {
         if (imageUpload == null) return;
         const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+        setphotoURL(imageRef.name);
         uploadBytes(imageRef, imageUpload).then(() => {
             alert("image uploaded");
         });
+        // console.log(imageUpload);
     }
 
     const updateSecurity = async () => {
@@ -117,8 +123,17 @@ export default function Profile() {
         setLoading(false);
     };
 
-
-
+    const getMyimages = async () => {
+        listAll(imageListRef).then((res) => {
+            res.items.forEach((item) => {
+                if (item.name === photoURL) {
+                    getDownloadURL(item).then((url) => {
+                        setImageList((prev) => [...prev, url]);
+                    });
+                }
+            });
+        });
+    }
 
     useEffect(() => {
         if (auth.currentUser) {
@@ -130,23 +145,34 @@ export default function Profile() {
     useEffect(() => {
         // listAll(imageListRef).then((res) => {
         //     res.items.forEach((item) => {
-        //         getDownloadURL(item).then((url) => {
-        //             setImageList((prev) => [...prev, url]);
-        //         });
+        //         if(item.name === photoURL){
+        //             getDownloadURL(item).then((url) => {
+        //                 setImageList((prev) => [...prev, url]);
+        //             });
+        //         }  
         //     });
         // });
         getUserByEmail();
     }, []);
 
     useEffect(() => {
-        if(localStorage.getItem('email') !== null){
+        if (localStorage.getItem('email') !== null) {
             setUpdateOffOn(false);
         }
     }, []);
 
+    useEffect(() => {
+        setTimeout(() => {
+            setHide(false);
+        }, 1000);
+    }, [])
+
     return (
         <>
+            <Topbar />
+
             <Navbar />
+            {hide ? <Spinner /> : null}
             {/* <!-- Hero Start --> */}
             <div className="container-fluid bg-primary py-5 hero-header mb-2">
                 <div className="row py-3">
@@ -166,11 +192,27 @@ export default function Profile() {
                     <div className="d-flex justify-content-center">
                         {error && <Alert variant="danger">{error}</Alert>}
                     </div>
+                    {localStorage.getItem('photo') ?
                     <Avatar
-                        alt="Remy Sharp"
-                        src={localStorage.getItem('photo')}
-                        sx={{ width: 86, height: 86 }}
-                    />
+                    alt="Remy Sharp"
+                    src={localStorage.getItem('photo') || photoURL}
+                    sx={{ width: 86, height: 86 }}
+                />
+                    :
+                    <div>
+                        {imageList.map((image, index) => {
+                        return (
+                            <div key={index}>
+                                <Avatar
+                                    alt="Remy Sharp"
+                                    src={image}
+                                    sx={{ width: 86, height: 86 }}
+                                />
+                            </div>
+                        )
+                    })}
+                    </div>
+                    }
                     <InputGroup className="mt-2">
                         <FormControl
                             type='file'
@@ -201,6 +243,7 @@ export default function Profile() {
                         <div className="form-group form-button">
                             <input disabled={loading} type="submit" name="signup" id="signup" className="form-submit" value="Update" onClick={UpdateUserInfo} />
                             <input type="submit" name="signup" id="signup" className="form-submit ms-2 btn-dark" value="Get My Data" onClick={getUserByEmail} />
+                            <input type="submit" name="signup" id="signup" className="form-submit ms-2 btn-dark" value="Get Profile Picture" onClick={getMyimages} />
                         </div>
                     </div>
 

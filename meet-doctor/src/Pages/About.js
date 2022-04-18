@@ -1,12 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import Topbar from '../components/TopBar';
 import Navbar from '../components/Navbar';
+import { Link } from 'react-router-dom';
+import { Spinner } from '../components/Spinner';
+
+
 export default function About() {
+    const [hide, setHide] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setHide(false);
+        }, 1000);
+    }, [])
     return (
         <>
-        <Topbar />
-      <Navbar />
+            <Topbar />
+            <Navbar />
+            {hide ? <Spinner /> : null}
+
+            <div className="container-fluid bg-primary py-5 hero-header mb-5">
+                <div className="row py-3">
+                    <div className="col-12 text-center">
+                        <h1 className="display-3 text-white animated zoomIn">About</h1>
+                        <Link to="/" className="h4 text-white">Home</Link>
+                        <i className="h5 bi bi-arrow-right text-white ms-1 me-1"></i>
+                        <Link to="/About" className="h4 text-white">About</Link>
+                    </div>
+                </div>
+            </div>
             <div className="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
                 <div className="container">
                     <div className="row g-5">
@@ -38,6 +61,6 @@ export default function About() {
                 </div>
             </div>
             <Footer />
-            </>
+        </>
     );
-    }
+}

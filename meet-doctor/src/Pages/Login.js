@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import {
     signInWithEmailAndPassword,
 } from 'firebase/auth';
@@ -8,6 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Alert } from 'react-bootstrap';
 import Topbar from '../components/TopBar';
 import Navbar from '../components/Navbar';
+import {Spinner} from '../components/Spinner';
+
 
 
 
@@ -19,7 +21,9 @@ export default function Login() {
     const [user, setUser] = useState(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [hide, setHide] = useState(true);
+
 
 
 
@@ -43,12 +47,16 @@ export default function Login() {
         setLoading(false);
     };
 
-
-
+    useEffect(() => {
+        setTimeout(() => {
+            setHide(false);
+        }, 1000);
+    }, [])
     return (
         <>
             <Topbar />
             <Navbar />
+            {hide ? <Spinner/> : null}
             {/* <!-- Sing in  Form --> */}
             <div className="container mt-2">
                 <div className="signin-content">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import {
     sendPasswordResetEmail
 } from 'firebase/auth';
@@ -6,6 +6,7 @@ import { auth } from '../config/firebase-config';
 import SignWithGoogle from '../components/GoogleAuth';
 import { Link } from "react-router-dom";
 import { Alert } from 'react-bootstrap';
+import {Spinner} from '../components/Spinner';
 
 
 export default function ForgetPassword() {
@@ -14,6 +15,8 @@ export default function ForgetPassword() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
+    const [hide, setHide] = useState(true);
+
 
 
 
@@ -36,11 +39,16 @@ export default function ForgetPassword() {
 
     }
 
-    
+    useEffect(() => {
+        setTimeout(() => {
+            setHide(false);
+        }, 1000);
+    }, [])
 
     return (
         <div className="main">
             {/* <!-- Sing in  Form --> */}
+            {hide ? <Spinner/> : null}
             <section className="sign-in">
                 <div className="container">
                     <div className="signin-content">

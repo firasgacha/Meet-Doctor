@@ -7,6 +7,8 @@ import { Alert } from 'react-bootstrap';
 import { Link,useNavigate } from 'react-router-dom';
 import Topbar from '../components/TopBar';
 import Navbar from '../components/Navbar';
+import {Spinner} from '../components/Spinner';
+
 
 
 
@@ -16,7 +18,9 @@ export default function Register() {
     const [PasswordConfirmation, setPasswordConfirmation] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [hide, setHide] = useState(true);
+
 
 
 
@@ -44,6 +48,12 @@ export default function Register() {
     useEffect(() => {
         document.getElementById('form-login').reset();
     },[]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setHide(false);
+        }, 1000);
+    }, [])
     return (
         <>
         <Topbar/>
@@ -54,10 +64,6 @@ export default function Register() {
                             <h2 className="form-title">Sign up</h2>
                             {error && <Alert variant="danger">{error}</Alert>}
                             <div className="register-form" id="register-form">
-                                {/* <div className="form-group">
-                                <label htmlFor="name"><i className="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Your Name"/>
-                            </div> */}
                                 <div className="form-group">
                                     <label htmlFor="email"><i className="zmdi zmdi-email"></i></label>
                                     <input type="email" name="email" id="email" placeholder="Your Email" onChange={(e) => setRegisterEmail(e.target.value)} />
@@ -70,6 +76,10 @@ export default function Register() {
                                     <label htmlFor="your_pass"><i className="zmdi zmdi-lock"></i></label>
                                     <input type="password" name="your_pass" id="your_pass" placeholder="Password Confirmation" onChange={(e) => setPasswordConfirmation(e.target.value)} />
                                 </div>
+                                <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                            </div>
                                 <div className="form-group form-button">
                                     <input disabled={loading} type="submit" name="signup" id="signup" className="form-submit" value="Register" onClick={registerUser} />
                                 </div>

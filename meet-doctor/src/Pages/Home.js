@@ -1,26 +1,22 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import Topbar from '../components/TopBar';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { minHeight } from '@mui/system';
+import {Spinner} from '../components/Spinner';
+
 export default function Home() {
+    
+
+    const [hide, setHide] = useState(true);
+    
+    useEffect(() => {
+        setTimeout(() => {
+            setHide(false);
+        }, 1000);
+    }, [])
+
     return (
         <div>
-            {/* <!-- Spinner Start --> */}
-            {/* <div id="spinner" className="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-                <div className="spinner-grow text-primary m-1" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-                <div className="spinner-grow text-dark m-1" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-                <div className="spinner-grow text-secondary m-1" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-            </div> */}
-            {/* <!-- Spinner End --> */}
-
-
             {/* {/* <!-- Topbar Start --> */}
             <Topbar />
             {/* <!-- Topbar End --> */}
@@ -30,6 +26,8 @@ export default function Home() {
             <Navbar />
             {/* <!-- Navbar End --> */}
 
+            {hide ? <Spinner/> : null}
+            
 
             {/* <!-- Full Screen Search Start --> */}
             <div className="modal fade" id="searchModal" tabIndex="-1">
@@ -60,8 +58,8 @@ export default function Home() {
                                 <div className="p-3" style={{ maxWidth: '900px' }}>
                                     <h5 className="text-white text-uppercase mb-3 animated slideInDown">Consult Your Doctor Online</h5>
                                     <h1 className="display-1 text-white mb-md-4 animated zoomIn">Stay Home, Stay Safe</h1>
-                                    <a href="appointment.html" className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
-                                    <a href="" className="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Contact Us</a>
+                                    <a className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Appointment</a>
+                                    <a className="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Contact Us</a>
                                 </div>
                             </div>
                         </div>

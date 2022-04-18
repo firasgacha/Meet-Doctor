@@ -7,12 +7,14 @@ import { auth } from '../config/firebase-config';
 import { Link } from "react-router-dom";
 import DoctorsCards from '../components/DoctorsCards';
 import Footer from '../components/Footer';
+import {Spinner} from '../components/Spinner';
 
 
 
 export default function Doctors() {
   const [doctors, setDoctors] = useState([]);
   const doctorsCollectionRef = collection(db, 'Doctor');
+  const [hide, setHide] = useState(true);
 
   useEffect(() => {
     const getDoctors = async () => {
@@ -24,10 +26,16 @@ export default function Doctors() {
     }
     getDoctors();
   }, [])
+  useEffect(() => {
+    setTimeout(() => {
+        setHide(false);
+    }, 1000);
+}, [])
   return (
     <>
       <Topbar />
       <Navbar />
+      {hide ? <Spinner/> : null}
       <div className="container-fluid bg-primary py-5 hero-header mb-5">
         <div className="row py-3">
           <div className="col-12 text-center">
@@ -52,7 +60,7 @@ export default function Doctors() {
             </div>
             {doctors.map((doctor) => {
               return (
-                <DoctorsCards key={doctor.id} name={doctor.name} speciality={doctor.speciality}/>
+                <DoctorsCards key={doctor.id} photoURL={doctor.photoURL} name={doctor.name} speciality={doctor.speciality} departement={doctor.departement}/>
               )
             })}
           </div>

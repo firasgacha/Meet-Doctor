@@ -6,6 +6,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import DepartementsCards from '../components/DepartementsCards';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import {Spinner} from '../components/Spinner';
 
 
 
@@ -13,6 +14,7 @@ export default function Departements() {
 
   const [departements, setDepartements] = useState([]);
   const departementsCollectionRef = collection(db, 'Departement');
+  const [hide, setHide] = useState(true);
 
 
   useEffect(() => {
@@ -28,10 +30,16 @@ export default function Departements() {
 
     getDepartements();
   }, [])
+  useEffect(() => {
+    setTimeout(() => {
+        setHide(false);
+    }, 1000);
+}, [])
   return (
     <>
       <Topbar />
       <Navbar />
+      {hide ? <Spinner/> : null}
       <div>
         <div className="container-fluid bg-primary py-5 hero-header mb-5">
           <div className="row py-3">

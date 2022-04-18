@@ -15,6 +15,7 @@ import MyAppointment from './Pages/MyAppointment';
 import MyAppointmentDoctor from './Pages/MyAppointmentDoctor';
 import Departements from './Pages/Departements';
 import About from './Pages/About';
+import Questions from './Pages/Questions';
 
 
 import {
@@ -30,6 +31,7 @@ root.render(
       <Route exact path="/" element={<Home />} />
       <Route path="/test" element={<Test />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/Questions" element={<Questions />} />
       <Route path="/Doctors" element={<Doctors />} />
       <Route path="/Departements" element={<Departements />} />
       <Route path="/About" element={<About />} />

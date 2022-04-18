@@ -5,11 +5,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import CustomizedTables from '../components/Table';
 import { auth, db } from '../config/firebase-config';
 import { collection, getDocs } from 'firebase/firestore';
+import {Spinner} from '../components/Spinner';
 
 
 
 
 export default function MyAppointment() {
+    const [hide, setHide] = useState(true);
     const [appointments, setAppointments] = useState([]);
     const appointmentsCollectionRef = collection(db, 'Appointment');
     const getAppointments = async () => {
@@ -24,10 +26,17 @@ export default function MyAppointment() {
     useEffect(() => {
         getAppointments();
     }, [])
+
+    useEffect(() => {
+        setTimeout(() => {
+            setHide(false);
+        }, 1000);
+    }, [])
     return (
         <>
             <Topbar />
             <Navbar />
+            {hide ? <Spinner/> : null}
             {/* <!-- Hero Start --> */}
             <div className="container-fluid bg-primary py-5 hero-header mb-5">
                 <div className="row py-3">
