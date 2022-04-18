@@ -73,9 +73,9 @@ export default function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarCollapse">
                     <div className="navbar-nav ms-auto py-0">
                         <Link to="/" className="nav-item nav-link active">Home</Link>
-                        <Link to="/Departements" className="nav-item nav-link active">Departements</Link>
-                        <Link to="/Doctors" className="nav-item nav-link active">Doctors</Link>
-                        <Link to="/About" className="nav-item nav-link active">About</Link>
+                        <Link to="/Departements" className="nav-item nav-link">Departements</Link>
+                        <Link to="/Doctors" className="nav-item nav-link">Doctors</Link>
+                        <Link to="/About" className="nav-item nav-link">About</Link>
                         {user ?
                             <div className="nav-item dropdown">
                                 <Dropdown>
@@ -90,7 +90,7 @@ export default function Navbar() {
                                 </Dropdown>
                             </div>
                             : null}
-                        <a href="contact.html" className="nav-item nav-link">Contact</a>
+                        <Link to="/Contact" className="nav-item nav-link">Contact</Link>
                     </div>
                     {/* <button type="button" className="btn text-dark" data-bs-toggle="modal" data-bs-target="#searchModal"><i className="fa fa-search"></i></button> */}
                     {
