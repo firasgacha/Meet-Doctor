@@ -6,6 +6,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { auth } from '../config/firebase-config';
 import { Link } from "react-router-dom";
 import DoctorsCards from '../components/DoctorsCards';
+import Footer from '../components/Footer';
 
 
 
@@ -15,9 +16,10 @@ export default function Doctors() {
 
   useEffect(() => {
     const getDoctors = async () => {
-      const data = await getDocs(doctorsCollectionRef);
+      const data = await (await getDocs(doctorsCollectionRef))
       setDoctors(
         data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        // .filter(doc => doc.phone.toString() === '23456789')
       )
     }
     getDoctors();
@@ -56,6 +58,7 @@ export default function Doctors() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

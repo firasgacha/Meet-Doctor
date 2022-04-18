@@ -47,6 +47,7 @@ export default function Navbar() {
             await signOut(auth);
             localStorage.clear();
             navigate('/');
+            window.location.reload();
         } catch (error) {
             console.log(error.message);
         }
@@ -74,7 +75,7 @@ export default function Navbar() {
                         <Link to="/" className="nav-item nav-link active">Home</Link>
                         <Link to="/Departements" className="nav-item nav-link active">Departements</Link>
                         <Link to="/Doctors" className="nav-item nav-link active">Doctors</Link>
-                        <a href="about.html" className="nav-item nav-link">About</a>
+                        <Link to="/About" className="nav-item nav-link active">About</Link>
                         {user ?
                             <div className="nav-item dropdown">
                                 <Dropdown>

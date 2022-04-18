@@ -5,6 +5,8 @@ import { db } from '../config/firebase-config';
 import { collection, getDocs } from 'firebase/firestore';
 import DepartementsCards from '../components/DepartementsCards';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
+
 
 
 export default function Departements() {
@@ -41,13 +43,12 @@ export default function Departements() {
             </div>
           </div>
         </div>
-        <div className="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div className="container-fluid py-1 wow fadeInUp" data-wow-delay="0.1s">
           <div className="container">
             <div className="row g-5 mb-5">
               <div className="col-lg-5 wow zoomIn" data-wow-delay="0.3s" style={{ minHeight: 400 }}>
                 <div className="twentytwenty-container position-relative h-100 rounded overflow-hidden">
-                  <img className="position-absolute w-100 h-100" src="https://firebasestorage.googleapis.com/v0/b/meet-doctor-e2707.appspot.com/o/departements%2Fdepartement-image.png?alt=media&token=76751d4f-1fec-494f-921a-e0020d1110b6" style={{ objectFit: "cover" }} />
-                  <img className="position-absolute w-100 h-100" src="https://firebasestorage.googleapis.com/v0/b/meet-doctor-e2707.appspot.com/o/departements%2Fdepartement-image.png?alt=media&token=76751d4f-1fec-494f-921a-e0020d1110b6" style={{ objectFit: "cover" }} />
+                  <img className="position-absolute w-100 h-100" src="../../assets/img/image-9.jpg" style={{ objectFit: "cover" }} />
                 </div>
               </div>
               <div className="col-lg-7">
@@ -60,7 +61,7 @@ export default function Departements() {
                   // .filter(dep => dep.name.toString().includes('Radiology'))
                   .map((dep) => {
                     return (
-                      <DepartementsCards key={dep.id} titre={dep.name} text={dep.descriptor} />
+                      <DepartementsCards key={dep.id} titre={dep.name} text={dep.descriptor} photoUrl={dep.photoUrl} />
                     )
                   })}
 
@@ -79,6 +80,7 @@ export default function Departements() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

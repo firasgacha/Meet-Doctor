@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../config/firebase-config';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase-config';
+import Footer from '../components/Footer';
 
 
 export default function Appointment() {
@@ -141,6 +142,7 @@ export default function Appointment() {
                 </div>
             </div>
             {/* <!-- Appointment End --> */}
+            <Footer />
         </>
     )
 }
