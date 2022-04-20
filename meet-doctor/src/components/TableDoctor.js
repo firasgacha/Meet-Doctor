@@ -9,9 +9,9 @@ import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
 import { db } from '../config/firebase-config';
-import { updateDoc, doc,deleteDoc } from 'firebase/firestore';
+import { updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -43,8 +43,8 @@ export default function CustomizedTables(props) {
 
     const updateAppointment = async (id) => {
         const appDoc = doc(db, "Appointment", id);
-        await updateDoc(appDoc,{
-            meetLink : meetLink
+        await updateDoc(appDoc, {
+            meetLink: meetLink
         }).then(() => {
             alert('Meet Link Sended successfully');
         }).catch(err => {
@@ -52,14 +52,14 @@ export default function CustomizedTables(props) {
         });
     }
 
-    const cancelAppointment = async(id) => {
-        const appDoc = doc(db,"Appointment",id);
+    const cancelAppointment = async (id) => {
+        const appDoc = doc(db, "Appointment", id);
         await deleteDoc(appDoc).then(() => {
-          alert('Appointment Canceled successfully');
+            alert('Appointment Canceled successfully');
         }).catch(err => {
-           console.log(err); 
+            console.log(err);
         });
-      }
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -67,11 +67,12 @@ export default function CustomizedTables(props) {
                 <TableHead>
                     <TableRow>
                         <StyledTableCell>Meet Information</StyledTableCell>
-                        <StyledTableCell align="right">Date</StyledTableCell>
-                        <StyledTableCell align="right">Time</StyledTableCell>
-                        <StyledTableCell align="right">Patient</StyledTableCell>
-                        <StyledTableCell align="right">Departement</StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
+                        <StyledTableCell align="center">Questions</StyledTableCell>
+                        <StyledTableCell align="center">Date</StyledTableCell>
+                        <StyledTableCell align="center">Time</StyledTableCell>
+                        <StyledTableCell align="center">Patient</StyledTableCell>
+                        <StyledTableCell align="center">Departement</StyledTableCell>
+                        <StyledTableCell align="center"></StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -84,18 +85,25 @@ export default function CustomizedTables(props) {
                                     label="Meeting Link"
                                     defaultValue={row.meetLink}
                                 />
-                                <Button onClick={()=>{updateAppointment(row.id)}} variant="contained" className="ms-2">
+                                <Button onClick={() => { updateAppointment(row.id) }} variant="contained" className="ms-2">
                                     Send
                                 </Button>
                                 <Button variant="contained" color="error" className="ms-2" target="_blank" href="https://meet.google.com/getalink?hs=202&authuser=0&illm=1650156919128&hl=fr">
                                     Get Google Meet Link
                                 </Button>
                             </StyledTableCell>
-                            <StyledTableCell align="right">{row.date}</StyledTableCell>
-                            <StyledTableCell align="right">{row.time}</StyledTableCell>
-                            <StyledTableCell align="right">{row.name}</StyledTableCell>
-                            <StyledTableCell align="right">{row.departement}</StyledTableCell>
-                            <StyledTableCell align="right" className="btn btn-default" onClick={() => { cancelAppointment(row.id) }}>Cancel</StyledTableCell>
+                            <StyledTableCell align="center">
+                                <Link to='/Questions'>
+                                    <Button variant="contained" className="ms-2">
+                                        Patient Form
+                                    </Button>
+                                </Link>
+                            </StyledTableCell>
+                            <StyledTableCell align="center">{row.date}</StyledTableCell>
+                            <StyledTableCell align="center">{row.time}</StyledTableCell>
+                            <StyledTableCell align="center">{row.name}</StyledTableCell>
+                            <StyledTableCell align="center">{row.departement}</StyledTableCell>
+                            <StyledTableCell align="center" className="btn btn-default" onClick={() => { cancelAppointment(row.id) }}>Cancel</StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>
